@@ -1,0 +1,22 @@
+{
+  "name": "schema-registry-did-crud",
+  "version": "0.0.1",
+  "description": "Package for schema registry did crud operations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: TBD"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/51nodes/schema-registry-did-crud.git"
+  },
+  "author": "51nodes GmbH",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/51nodes/schema-registry-did-crud/issues"
+  },
+  "homepage": "https://github.com/51nodes/schema-registry-did-crud#readme",
+  "dependencies": {
+    "ipfs": "^0.46.0"
+  }
+}
