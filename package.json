@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/51nodes/schema-registry-did-crud#readme",
   "dependencies": {
+    "cids": "^0.8.3",
     "ipfs": "^0.46.0"
   }
 }
