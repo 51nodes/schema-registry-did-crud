@@ -1,1 +1,2 @@
-export { validateSchemaType, registerSchema } from './schema-registry';
+export { validateSchemaType, registerSchema, getSchema } from './schema-registry';
+export { SchemaType, Network } from './model';

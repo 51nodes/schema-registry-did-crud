@@ -1,9 +1,9 @@
 export enum SchemaType {
-  JsonSchema = 'JSON_SCHEMA',
-  Xsd = 'XSD',
+  JsonSchema = 'json-schema',
+  Xsd = 'xsd',
 }
 
 export enum Network {
-  EvanIpfs = 'EVAN_IPFS',
-  PublicIpfs = 'PUBLIC_IPFS',
+  EvanIpfs = 'evan_ipfs',
+  PublicIpfs = 'public-ipfs',
 }
