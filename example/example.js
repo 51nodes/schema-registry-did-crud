@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.addSchemaToIPFS = void 0;
+exports.addSchemaToIpfs = void 0;
 var decentralized_schema_registry_1 = require("decentralized-schema-registry");
 var model_1 = require("decentralized-schema-registry/dist/model");
 var tslog_1 = require("tslog");
@@ -53,7 +53,7 @@ var configObject = {
         web3Provider: 'wss://core.evan.network/ws'
     }
 };
-function addSchemaToIPFS(schemaAsString) {
+function addSchemaToIpfs(schemaAsString) {
     return __awaiter(this, void 0, void 0, function () {
         var exampleDidEvan, exampleDidPublic, exampleEvanSchema, examplePublicSchema;
         return __generator(this, function (_a) {
@@ -61,7 +61,7 @@ function addSchemaToIPFS(schemaAsString) {
                 case 0:
                     log.info('init Library');
                     decentralized_schema_registry_1.initLibrary(configObject);
-                    log.info('configs: ');
+                    log.info('configration: ');
                     log.info(decentralized_schema_registry_1.getConfig());
                     log.info('register schema in Evan IPFS');
                     return [4 /*yield*/, decentralized_schema_registry_1.registerSchema(schemaAsString, model_1.SchemaType.JsonSchema, model_1.Network.EvanIpfs)];
@@ -90,5 +90,5 @@ function addSchemaToIPFS(schemaAsString) {
         });
     });
 }
-exports.addSchemaToIPFS = addSchemaToIPFS;
-addSchemaToIPFS(validJsonSchema);
+exports.addSchemaToIpfs = addSchemaToIpfs;
+addSchemaToIpfs(validJsonSchema);

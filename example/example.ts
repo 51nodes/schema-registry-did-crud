@@ -49,11 +49,11 @@ const configObject: ConfigObject = {
   }
 }
 
-export async function addSchemaToIPFS(schemaAsString: string) {
+export async function addSchemaToIpfs(schemaAsString: string) {
   log.info('init Library');
   initLibrary(configObject);
 
-  log.info('configs: ');
+  log.info('configration: ');
   log.info(getConfig());
 
   log.info('register schema in Evan IPFS');
@@ -76,4 +76,4 @@ export async function addSchemaToIPFS(schemaAsString: string) {
   exit(0);
 }
 
-addSchemaToIPFS(validJsonSchema);
+addSchemaToIpfs(validJsonSchema);
