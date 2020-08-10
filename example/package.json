@@ -1,0 +1,17 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc example.ts --skipLibCheck",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "node example.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@evan.network/api-blockchain-core": "^2.20.0",
+    "tslog": "^2.6.5"
+  }
+}

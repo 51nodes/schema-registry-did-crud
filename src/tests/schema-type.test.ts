@@ -1,5 +1,5 @@
-import { validateSchemaType } from '../index';
-import { SchemaType, Network } from '../model';
+import { SchemaType } from '../model';
+import { validateSchemaType } from '../schema-types/schema-validator';
 
 test('Single String Json Schema returns false', () => {
   const validationResult = validateSchemaType('23dlas$%LR"LKFGSDFGA', SchemaType.JsonSchema);

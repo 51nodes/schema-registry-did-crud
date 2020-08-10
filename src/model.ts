@@ -4,6 +4,23 @@ export enum SchemaType {
 }
 
 export enum Network {
-  EvanIpfs = 'evan_ipfs',
+  EvanIpfs = 'evan-ipfs',
   PublicIpfs = 'public-ipfs',
+}
+
+export interface ConfigObject {
+  publicIpfsUrl?: string;
+  runtimeConfig?: EvanRunTimeConfig;
+}
+
+export interface EvanRunTimeConfig {
+  accountMap: {
+    [key: string]: any;
+  }
+  ipfs: {
+    host: string;
+    port: string;
+    protocol: string;
+  };
+  web3Provider: string;
 }
