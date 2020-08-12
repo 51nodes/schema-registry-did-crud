@@ -37,10 +37,10 @@ const validJsonSchema = `{
   }`;
 
 describe('Test flow with mocked Evan ipfs', () => {
-  const validDid = 'did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c';
+  const validDid = 'did:schema:evan-ipfs:type-hint=json-schema:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(evanIpfsService, 'addSchemaToEvanIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
+    jest.spyOn(evanIpfsService, 'addSchemaToEvanIPFS').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.EvanIpfs);
     expect(did).toBe(validDid);
   });
@@ -54,10 +54,10 @@ describe('Test flow with mocked Evan ipfs', () => {
 });
 
 describe('Test flow  with mocked Public Ipfs', () => {
-  const validDid = 'did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c';
+  const validDid = 'did:schema:public-ipfs:type-hint=json-schema:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(publicIpfsService, 'addSchemaToPublicIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
+    jest.spyOn(publicIpfsService, 'addSchemaToPublicIPFS').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.PublicIpfs);
     expect(did).toBe(validDid);
   });
