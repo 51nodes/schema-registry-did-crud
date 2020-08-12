@@ -1,6 +1,7 @@
 import { registerSchema, getSchema } from "../schema-registry";
 import { SchemaType, Network } from "../model";
-import ipfsFunctions from "../ipfs/ipfs-service";
+import publicIpfsService from "../ipfs/public-ipfs-service";
+import evanIpfsService from "../ipfs/evan-ipfs-service";
 
 const validJsonSchema = `{
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -39,30 +40,30 @@ describe('Test flow with mocked Evan ipfs', () => {
   const validDid = 'did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(ipfsFunctions, 'addSchemaToEvanIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
+    jest.spyOn(evanIpfsService, 'addSchemaToEvanIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.EvanIpfs);
     expect(did).toBe(validDid);
   });
 
   it('should get the registierd schema', async () => {
-    jest.spyOn(ipfsFunctions, 'getSchemaFromEvanIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
+    jest.spyOn(evanIpfsService, 'getSchemaFromEvanIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDid)
     expect(schema).toBe(validJsonSchema);
   });
 
 });
 
-describe('Test flow  with mocked Publc Ipfs', () => {
+describe('Test flow  with mocked Public Ipfs', () => {
   const validDid = 'did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(ipfsFunctions, 'addSchemaToPublicIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
+    jest.spyOn(publicIpfsService, 'addSchemaToPublicIPFS').mockReturnValue(Promise.resolve('0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.PublicIpfs);
     expect(did).toBe(validDid);
   });
 
   it('should get the registierd schema', async () => {
-    jest.spyOn(ipfsFunctions, 'getSchemaFromPublicIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
+    jest.spyOn(publicIpfsService, 'getSchemaFromPublicIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDid)
     expect(schema).toBe(validJsonSchema);
   });

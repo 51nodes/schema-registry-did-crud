@@ -1,4 +1,5 @@
-import { validateDid } from '../did/did-validator';
+import { validateDid, parseSchemaDid, stringifySchemaDid } from '../did/did-utils';
+import { SchemaDid, Network, SchemaType } from '../model';
 
 test('DID start without "did" returns false', () => {
   const invalidDid = `d:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
@@ -30,16 +31,10 @@ test('DID has no "hash" returns false', () => {
   expect(validationResult).toBe(false);
 });
 
-test('DID has long hash returns false', () => {
-  const invalidDid = `did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567cc`;
-  const validationResult = validateDid(invalidDid);
-  expect(validationResult).toBe(false);
-});
-
-test('DID has short hash returns false', () => {
-  const invalidDid = `did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda0556`;
-  const validationResult = validateDid(invalidDid);
-  expect(validationResult).toBe(false);
+test('correct DID with ipfs hash returns true', () => {
+  const validDid = `did:schema:evan-ipfs:type-hint=json-schema:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51`;
+  const validationResult = validateDid(validDid);
+  expect(validationResult).toBe(true);
 });
 
 test('correct DID with evan ipfs as network returns true', () => {
@@ -48,7 +43,7 @@ test('correct DID with evan ipfs as network returns true', () => {
   expect(validationResult).toBe(true);
 });
 
-test('correct DID with public ipfs as network true', () => {
+test('correct DID with public ipfs as network returns true', () => {
   const validDid = `did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
   const validationResult = validateDid(validDid);
   expect(validationResult).toBe(true);
@@ -58,4 +53,33 @@ test('DID has no "type-hint" returns true', () => {
   const validDid = `did:schema:evan-ipfs:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
   const validationResult = validateDid(validDid);
   expect(validationResult).toBe(true);
+});
+
+test('parse and stringify did with type hint', () => {
+  const didObject: SchemaDid = {
+    did: 'did',
+    method: 'schema',
+    network: Network.EvanIpfs,
+    hint: SchemaType.JsonSchema,
+    id: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
+  }
+  const validDid = `did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
+  const resultObject = parseSchemaDid(validDid);
+  expect(resultObject).toStrictEqual(didObject);
+  const didAsString = stringifySchemaDid(resultObject);
+  expect(didAsString).toStrictEqual(validDid);
+});
+
+test('parse and stringify did without type hint', () => {
+  const didObject: SchemaDid = {
+    did: 'did',
+    method: 'schema',
+    network: Network.EvanIpfs,
+    id: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
+  }
+  const validDid = `did:schema:evan-ipfs:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
+  const resultObject = parseSchemaDid(validDid);
+  expect(resultObject).toStrictEqual(didObject);
+  const didAsString = stringifySchemaDid(resultObject);
+  expect(didAsString).toStrictEqual(validDid);
 });

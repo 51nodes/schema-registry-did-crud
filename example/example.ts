@@ -1,7 +1,7 @@
-import { registerSchema, getSchema, initLibrary, getConfig, } from 'decentralized-schema-registry';
-import { SchemaType, Network, ConfigObject } from 'decentralized-schema-registry/dist/model';
+
 import { Logger } from "tslog";
 import { exit } from 'process';
+import { ConfigObject, initLibrary, getConfig, registerSchema, SchemaType, Network, getSchema } from "../dist";
 
 const log: Logger = new Logger({ name: "example" });
 
@@ -40,7 +40,7 @@ const validJsonSchema = `{
 
 const configObject: ConfigObject = {
   publicIpfsUrl: 'https://ipfs.infura.io:5001/api/v0',
-  runtimeConfig: {
+  evanRuntimeConfig: {
     accountMap: {
       '0x8370F91b6Cdf7A15a7C48593c8Cba98C55B25e25': '50a635f2797d04e93c3c5d799099e42dbf116dcc04867ad6fbce83f1ec4cdfce',
     },
@@ -64,12 +64,12 @@ export async function addSchemaToIpfs(schemaAsString: string) {
   const exampleDidPublic = await registerSchema(schemaAsString, SchemaType.JsonSchema, Network.PublicIpfs);
   log.info('Public IPFS DID: ' + exampleDidPublic);
 
-  log.info('get schema under did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c')
-  const exampleEvanSchema = await getSchema('did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c');
+  log.info('get schema under did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
+  const exampleEvanSchema = await getSchema('did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
   log.info(exampleEvanSchema);
 
-  log.info('get schema under did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c')
-  const examplePublicSchema = await getSchema('did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c');
+  log.info('get schema under did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
+  const examplePublicSchema = await getSchema('did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
   log.info(examplePublicSchema);
 
   log.info('DONE!');

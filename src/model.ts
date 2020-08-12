@@ -8,12 +8,20 @@ export enum Network {
   PublicIpfs = 'public-ipfs',
 }
 
-export interface ConfigObject {
-  publicIpfsUrl?: string;
-  runtimeConfig?: EvanRunTimeConfig;
+export interface SchemaDid {
+  did: string,
+  method: string,
+  network: Network,
+  hint?: SchemaType,
+  id:string
 }
 
-export interface EvanRunTimeConfig {
+export interface ConfigObject {
+  publicIpfsUrl?: string;
+  evanRuntimeConfig?: EvanRuntimeConfig;
+}
+
+export interface EvanRuntimeConfig  {
   accountMap: {
     [key: string]: any;
   }
