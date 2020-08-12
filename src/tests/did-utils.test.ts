@@ -43,6 +43,12 @@ test('correct DID with evan ipfs as network returns true', () => {
   expect(validationResult).toBe(true);
 });
 
+test('correct DID with id includes - . _ returns true', () => {
+  const validDid = `did:schema:evan-ipfs:type-hint=json-schema:0xa937ea507c396d_d417be352825c65-5fdf1e6fb60e83.8db03f2cccda05567c`;
+  const validationResult = validateDid(validDid);
+  expect(validationResult).toBe(true);
+});
+
 test('correct DID with public ipfs as network returns true', () => {
   const validDid = `did:schema:public-ipfs:type-hint=json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
   const validationResult = validateDid(validDid);
