@@ -9,19 +9,24 @@ const BufferList = require('bl/BufferList')
 const log: Logger = new Logger({ name: 'Public Ipfs Service' });
 
 async function addSchemaToPublicIpfs(schemaAsString: string): Promise<string> {
-  const ipfs = await initPublicIpfs();
+  const ipfs = initPublicIpfs();
   log.debug(`Add schema to public ipfs: ${schemaAsString}`);
   const resultObject = await ipfs.add(schemaAsString);
   let ipfsHash: string;
   for await (const obj of resultObject) {
     ipfsHash = obj.path
   }
+  if (getConfig().publicIpfsConfig?.enablePin) {
+    log.debug(`pin schema on public ipfs: ${schemaAsString}`);
+    const pinResult = await pinSchemaInPublicIpfs(ipfsHash, ipfs);
+    log.debug('Schema has been pinned: ' + pinResult);
+  }
   log.debug(`IpfsHash: ${ipfsHash}`);
   return ipfsHash;
 }
 
 async function getSchemaFromPublicIpfs(ipfsHash: string): Promise<string> {
-  const ipfs = await initPublicIpfs();
+  const ipfs = initPublicIpfs();
   let schemaAsString: string;
   const chunks = []
   log.debug(`Get schema from public ipfs with IpfsHash: ${ipfsHash}`);
@@ -37,9 +42,7 @@ async function getSchemaFromPublicIpfs(ipfsHash: string): Promise<string> {
   return schemaAsString;
 }
 
-async function pinSchemaInPublicIpfs(ipfsHash: string): Promise<boolean> {
-  log.debug(`Pin schema with IpfsHash ${ipfsHash} in public ipfs`);
-  const ipfs = await initPublicIpfs();
+async function pinSchemaInPublicIpfs(ipfsHash: string, ipfs: any): Promise<boolean> {
   try {
     await ipfs.pin.add(ipfsHash);
     return true;
@@ -49,22 +52,14 @@ async function pinSchemaInPublicIpfs(ipfsHash: string): Promise<boolean> {
   }
 }
 
-function validatePinEnabledOnPublicIpfs(): true | Error {
-  if (!getConfig().publicIpfsConfig?.enablePin) {
-    throw new Error('Pinning is not enabled!');
-  }
-  return true;
-}
-
-async function initPublicIpfs() {
+function initPublicIpfs(): any {
   const publicIpfsUrl = getConfig().publicIpfsConfig.nodeUrl;
   log.debug(`Init public ipfs client: ${publicIpfsUrl}`);
   return IpfsHttpClient(publicIpfsUrl);
 }
 
 const publicIpfsService = {
-  addSchemaToPublicIpfs, getSchemaFromPublicIpfs,
-  validatePinEnabledOnPublicIpfs, pinSchemaInPublicIpfs
+  addSchemaToPublicIpfs, getSchemaFromPublicIpfs
 };
 
 export default publicIpfsService;

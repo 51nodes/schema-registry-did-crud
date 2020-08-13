@@ -18,6 +18,11 @@ async function addSchemaToEvanIpfs(schemaAsString: string): Promise<string> {
   const resultByte32 = await runtime.dfs.add('schema.txt', Buffer.from(schemaAsString, 'utf-8'))
   const ipfsHash = Ipfs.bytes32ToIpfsHash(resultByte32);
   log.debug(`IpfsHash: ${ipfsHash}`);
+  if (getConfig().evanRuntimeConfig?.enablePin) {
+    log.debug(`pin schema on public ipfs: ${schemaAsString}`);
+    const pinResult = pinSchemaInEvanIpfs(ipfsHash, runtime);
+    log.debug('Schema has been pinned: ' + pinResult);
+  }
   return ipfsHash;
 }
 
@@ -30,9 +35,7 @@ async function getSchemaFromEvanIpfs(ipfsHash: string): Promise<string> {
   return schema;
 }
 
-async function pinSchemaInEvanIpfs(ipfsHash: string): Promise<boolean> {
-  log.debug(`Pin schema with  IpfsHash ${ipfsHash} in evan ipfs`);
-  const runtime = await initEvanRunTime();
+async function pinSchemaInEvanIpfs(ipfsHash: string, runtime: Runtime): Promise<boolean> {
   try {
     await runtime.ipld.ipfs.remoteNode.pin.add(ipfsHash);
     return true;
@@ -40,13 +43,6 @@ async function pinSchemaInEvanIpfs(ipfsHash: string): Promise<boolean> {
     log.error(error);
     return false;
   }
-}
-
-function validatePinEnabledOnEvanIpfs(): boolean | Error {
-  if (!getConfig().evanRuntimeConfig?.enablePin) {
-    throw new Error('Pinning is not enabled!');
-  }
-  return true;
 }
 
 async function initEvanRunTime(): Promise<Runtime> {
@@ -68,8 +64,7 @@ async function initEvanRunTime(): Promise<Runtime> {
 }
 
 const evanIpfsService = {
-  addSchemaToEvanIpfs, getSchemaFromEvanIpfs, 
-  validatePinEnabledOnEvanIpfs, pinSchemaInEvanIpfs
+  addSchemaToEvanIpfs, getSchemaFromEvanIpfs
 };
 
 export default evanIpfsService;

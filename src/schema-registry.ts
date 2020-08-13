@@ -50,18 +50,3 @@ export async function getSchema(didAsString: string): Promise<string> {
   }
   return schemaAsString;
 }
-
-export async function pinSchema(didAsString: string): Promise<boolean> {
-  if (!validateDid(didAsString)) {
-    throw new InvalidInput('DID');
-  }
-  const did = parseSchemaDid(didAsString);
-  switch (did.network) {
-    case Network.EvanIpfs:
-      evanIpfsService.validatePinEnabledOnEvanIpfs();
-      return await evanIpfsService.pinSchemaInEvanIpfs(did.id)
-    case Network.PublicIpfs:
-      publicIpfsService.validatePinEnabledOnPublicIpfs();
-      return await publicIpfsService.pinSchemaInPublicIpfs(did.id);
-  }
-}
