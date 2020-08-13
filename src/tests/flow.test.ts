@@ -1,7 +1,7 @@
-import { registerSchema, getSchema } from "../schema-registry";
-import { SchemaType, Network } from "../model";
-import publicIpfsService from "../ipfs/public-ipfs-service";
-import evanIpfsService from "../ipfs/evan-ipfs-service";
+import { registerSchema, getSchema } from '../schema-registry';
+import { SchemaType, Network } from '../model';
+import publicIpfsService from '../ipfs/public-ipfs-service';
+import evanIpfsService from '../ipfs/evan-ipfs-service';
 
 const validJsonSchema = `{
     "$schema": "http://json-schema.org/draft-07/schema#",

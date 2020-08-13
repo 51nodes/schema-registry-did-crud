@@ -1,5 +1,5 @@
-import { SchemaDid, Network, SchemaType } from "../model";
-import { InvalidInput } from "../exceptions/invalid-input.exception";
+import { SchemaDid, Network, SchemaType } from '../model';
+import { InvalidInput } from '../exceptions/invalid-input.exception';
 
 const didRegEx = /^did:schema:(evan-ipfs|public-ipfs):(type-hint=(json-schema|xsd):)?([0-9a-zA-Z._-]*)$/
 
@@ -21,8 +21,7 @@ export function parseSchemaDid(didAsString: string): SchemaDid {
         id: hash
     };
     if (parsedDidArray[3]) {
-        const hintKey = 'hint'
-        didObject[hintKey] = parsedDidArray[3] as SchemaType;
+        didObject.hint = parsedDidArray[3] as SchemaType;
     }
     return didObject;
 }

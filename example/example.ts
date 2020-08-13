@@ -1,9 +1,9 @@
 
-import { Logger } from "tslog";
+import { Logger } from 'tslog';
 import { exit } from 'process';
-import { ConfigObject, initLibrary, getConfig, registerSchema, SchemaType, Network, getSchema } from "../dist";
+import { ConfigObject, initLibrary, getConfig, registerSchema, SchemaType, Network, getSchema } from '../dist';
 
-const log: Logger = new Logger({ name: "example" });
+const log: Logger = new Logger({ name: 'example' });
 
 const validJsonSchema = `{
     "$schema": "http://json-schema.org/draft-07/schema#",

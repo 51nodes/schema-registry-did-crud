@@ -1,12 +1,12 @@
 import * as IpfsHttpClient from 'ipfs-http-client';
 import { getConfig } from '../schema-registry';
-import { Logger } from "tslog";
+import { Logger } from 'tslog';
 
 // tslint:disable: variable-name && no-var-requires
 const BufferList = require('bl/BufferList')
 // tslint:enable: variable-name && no-var-requires
 
-const log: Logger = new Logger({ name: "Public Ipfs Service" });
+const log: Logger = new Logger({ name: 'Public Ipfs Service' });
 
 async function addSchemaToPublicIPFS(schemaAsString: string): Promise<string> {
   const ipfs = await initPublicIpfs();

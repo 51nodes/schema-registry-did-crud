@@ -4,13 +4,13 @@ import {
   Runtime
 } from '@evan.network/api-blockchain-core';
 import { getConfig } from '../schema-registry';
-import { Logger } from "tslog";
+import { Logger } from 'tslog';
 
 // tslint:disable: variable-name && no-var-requires
 const Web3 = require('web3');
 // tslint:enable: variable-name && no-var-requires
 
-const log: Logger = new Logger({ name: "Evan Ipfs Service" });
+const log: Logger = new Logger({ name: 'Evan Ipfs Service' });
 
 async function addSchemaToEvanIPFS(schemaAsString: string): Promise<string> {
   const runtime = await initEvanRunTime();
@@ -40,7 +40,8 @@ async function initEvanRunTime(): Promise<Runtime> {
     ipfs,
     web3Provider
   };
-  log.debug(`evanRuntimeConfig: ${evanRuntimeConfig}`);
+  log.debug(`evanRuntimeConfig: `);
+  log.debug(evanRuntimeConfig)
   const provider = new Web3.providers.WebsocketProvider(
     evanRuntimeConfig.web3Provider, { clientConfig: { keepalive: true, keepaliveInterval: 5000 } });
   const web3 = new Web3(provider, null, { transactionConfirmationBlocks: 1 });
