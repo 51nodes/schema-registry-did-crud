@@ -3,7 +3,7 @@ import { Logger } from 'tslog';
 import { exit } from 'process';
 import {
   initLibrary, getConfig,
-  registerSchema, getSchema, pinSchema,
+  registerSchema, getSchema,
   SchemaType, Network, ConfigObject
 } from '../dist';
 
@@ -79,14 +79,6 @@ export async function addSchemaToIpfs(schemaAsString: string) {
   log.info('get schema under did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
   const examplePublicSchema = await getSchema('did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
   log.info(examplePublicSchema);
-
-  log.info('pin schema under did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
-  const resultPinPublicIpfs = await pinSchema('did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
-  log.info('pin on public-ipfs result: ' + resultPinPublicIpfs);
-
-  log.info('pin schema under did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
-  const resultPinEvanIpfs = await pinSchema('did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
-  log.info('pin on evan-ipfs result: ' + resultPinEvanIpfs);
 
   log.info('DONE!');
   exit(0);
