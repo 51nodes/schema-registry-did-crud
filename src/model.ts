@@ -17,8 +17,13 @@ export interface SchemaDid {
 }
 
 export interface ConfigObject {
-  publicIpfsUrl?: string;
+  publicIpfsConfig?: PublicIpfsConfig;
   evanRuntimeConfig?: EvanRuntimeConfig;
+}
+
+export interface PublicIpfsConfig {
+  nodeUrl: string,
+  enablePin: boolean
 }
 
 export interface EvanRuntimeConfig  {
@@ -31,4 +36,5 @@ export interface EvanRuntimeConfig  {
     protocol: string;
   };
   web3Provider: string;
+  enablePin: boolean;
 }

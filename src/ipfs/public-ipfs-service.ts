@@ -8,7 +8,7 @@ const BufferList = require('bl/BufferList')
 
 const log: Logger = new Logger({ name: 'Public Ipfs Service' });
 
-async function addSchemaToPublicIPFS(schemaAsString: string): Promise<string> {
+async function addSchemaToPublicIpfs(schemaAsString: string): Promise<string> {
   const ipfs = await initPublicIpfs();
   log.debug(`Add schema to public ipfs: ${schemaAsString}`);
   const resultObject = await ipfs.add(schemaAsString);
@@ -20,7 +20,7 @@ async function addSchemaToPublicIPFS(schemaAsString: string): Promise<string> {
   return ipfsHash;
 }
 
-async function getSchemaFromPublicIPFS(ipfsHash: string): Promise<string> {
+async function getSchemaFromPublicIpfs(ipfsHash: string): Promise<string> {
   const ipfs = await initPublicIpfs();
   let schemaAsString: string;
   const chunks = []
@@ -37,14 +37,34 @@ async function getSchemaFromPublicIPFS(ipfsHash: string): Promise<string> {
   return schemaAsString;
 }
 
+async function pinSchemaInPublicIpfs(ipfsHash: string): Promise<boolean> {
+  log.debug(`Pin schema with IpfsHash ${ipfsHash} in public ipfs`);
+  const ipfs = await initPublicIpfs();
+  try {
+    await ipfs.pin.add(ipfsHash);
+    return true;
+  } catch (error) {
+    log.error(error);
+    return false;
+  }
+}
+
+function validatePinEnabledOnPublicIpfs(): true | Error {
+  if (!getConfig().publicIpfsConfig?.enablePin) {
+    throw new Error('Pinning is not enabled!');
+  }
+  return true;
+}
+
 async function initPublicIpfs() {
-  const publicIpfsUrl = getConfig().publicIpfsUrl;
+  const publicIpfsUrl = getConfig().publicIpfsConfig.nodeUrl;
   log.debug(`Init public ipfs client: ${publicIpfsUrl}`);
   return IpfsHttpClient(publicIpfsUrl);
 }
 
 const publicIpfsService = {
-  addSchemaToPublicIPFS, getSchemaFromPublicIPFS
+  addSchemaToPublicIpfs, getSchemaFromPublicIpfs,
+  validatePinEnabledOnPublicIpfs, pinSchemaInPublicIpfs
 };
 
 export default publicIpfsService;

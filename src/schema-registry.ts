@@ -23,11 +23,11 @@ export async function registerSchema(schemaContent: any, schemaType: SchemaType,
   let ipfsHash: string;
   switch (network) {
     case Network.EvanIpfs: {
-      ipfsHash = await evanIpfsService.addSchemaToEvanIPFS(schemaContent);
+      ipfsHash = await evanIpfsService.addSchemaToEvanIpfs(schemaContent);
       break;
     }
     case Network.PublicIpfs: {
-      ipfsHash = await publicIpfsService.addSchemaToPublicIPFS(schemaContent);
+      ipfsHash = await publicIpfsService.addSchemaToPublicIpfs(schemaContent);
       break;
     }
   }
@@ -42,11 +42,26 @@ export async function getSchema(didAsString: string): Promise<string> {
   const did = parseSchemaDid(didAsString);
   switch (did.network) {
     case Network.EvanIpfs:
-      schemaAsString = await evanIpfsService.getSchemaFromEvanIPFS(did.id);
+      schemaAsString = await evanIpfsService.getSchemaFromEvanIpfs(did.id);
       break;
     case Network.PublicIpfs:
-      schemaAsString = await publicIpfsService.getSchemaFromPublicIPFS(did.id);
+      schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
       break;
   }
   return schemaAsString;
+}
+
+export async function pinSchema(didAsString: string): Promise<boolean> {
+  if (!validateDid(didAsString)) {
+    throw new InvalidInput('DID');
+  }
+  const did = parseSchemaDid(didAsString);
+  switch (did.network) {
+    case Network.EvanIpfs:
+      evanIpfsService.validatePinEnabledOnEvanIpfs();
+      return await evanIpfsService.pinSchemaInEvanIpfs(did.id)
+    case Network.PublicIpfs:
+      publicIpfsService.validatePinEnabledOnPublicIpfs();
+      return await publicIpfsService.pinSchemaInPublicIpfs(did.id);
+  }
 }
