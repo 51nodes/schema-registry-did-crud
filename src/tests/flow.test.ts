@@ -40,30 +40,30 @@ describe('Test flow with mocked Evan ipfs', () => {
   const validDid = 'did:schema:evan-ipfs:type-hint=json-schema:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(evanIpfsService, 'addSchemaToEvanIPFS').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
+    jest.spyOn(evanIpfsService, 'addSchemaToEvanIpfs').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.EvanIpfs);
     expect(did).toBe(validDid);
   });
 
   it('should get the registierd schema', async () => {
-    jest.spyOn(evanIpfsService, 'getSchemaFromEvanIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
+    jest.spyOn(evanIpfsService, 'getSchemaFromEvanIpfs').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDid)
     expect(schema).toBe(validJsonSchema);
   });
 
 });
 
-describe('Test flow  with mocked Public Ipfs', () => {
+describe('Test flow with mocked Public Ipfs', () => {
   const validDid = 'did:schema:public-ipfs:type-hint=json-schema:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
 
   it('should register the validJsonSchema', async () => {
-    jest.spyOn(publicIpfsService, 'addSchemaToPublicIPFS').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
+    jest.spyOn(publicIpfsService, 'addSchemaToPublicIpfs').mockReturnValue(Promise.resolve('QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51'));
     const did = await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network.PublicIpfs);
     expect(did).toBe(validDid);
   });
 
   it('should get the registierd schema', async () => {
-    jest.spyOn(publicIpfsService, 'getSchemaFromPublicIPFS').mockReturnValue(Promise.resolve(validJsonSchema));
+    jest.spyOn(publicIpfsService, 'getSchemaFromPublicIpfs').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDid)
     expect(schema).toBe(validJsonSchema);
   });
