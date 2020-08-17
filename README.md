@@ -1,5 +1,7 @@
 # Schema Registry DID CRUD v0.01
 
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
 ### Build library
 1.  npm install
 1.  npm run test
@@ -8,7 +10,10 @@
 ### Run unit tests
 1. npm run test
 
-### Import library in your code (WIP)
+### Import library in your code
+
+* npm install @51nodes/decentralized-schema-registry
+
 ```typescript
 import {initLibrary, registerSchema, getSchema, SchemaType, Network} from '@51nodes/decentralized-schema-registry'
 
