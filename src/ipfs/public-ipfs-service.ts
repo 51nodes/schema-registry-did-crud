@@ -1,6 +1,7 @@
 import * as IpfsHttpClient from 'ipfs-http-client';
 import { getConfig } from '../schema-registry';
 import { Logger } from 'tslog';
+import { FailedToPin } from '../exceptions/failed-to-pin.exception';
 
 // tslint:disable: variable-name && no-var-requires
 const BufferList = require('bl/BufferList')
@@ -17,9 +18,9 @@ async function addSchemaToPublicIpfs(schemaAsString: string): Promise<string> {
     ipfsHash = obj.path
   }
   if (getConfig().publicIpfsConfig?.enablePin) {
-    log.debug(`pin schema on public ipfs: ${schemaAsString}`);
-    const pinResult = await pinSchemaInPublicIpfs(ipfsHash, ipfs);
-    log.debug('Schema has been pinned: ' + pinResult);
+    log.debug(`Pin schema on public ipfs`);
+    await pinSchemaInPublicIpfs(ipfsHash, ipfs);
+    log.debug('Schema has been pinned');
   }
   log.debug(`IpfsHash: ${ipfsHash}`);
   return ipfsHash;
@@ -42,13 +43,12 @@ async function getSchemaFromPublicIpfs(ipfsHash: string): Promise<string> {
   return schemaAsString;
 }
 
-async function pinSchemaInPublicIpfs(ipfsHash: string, ipfs: any): Promise<boolean> {
+async function pinSchemaInPublicIpfs(ipfsHash: string, ipfs: any): Promise<void> {
   try {
     await ipfs.pin.add(ipfsHash);
-    return true;
   } catch (error) {
     log.error(error);
-    return false;
+    throw new FailedToPin(error.message);
   }
 }
 

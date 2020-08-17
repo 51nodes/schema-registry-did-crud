@@ -5,6 +5,7 @@ import {
 } from '@evan.network/api-blockchain-core';
 import { getConfig } from '../schema-registry';
 import { Logger } from 'tslog';
+import { FailedToPin } from '../exceptions/failed-to-pin.exception';
 
 // tslint:disable: variable-name && no-var-requires
 const Web3 = require('web3');
@@ -19,9 +20,9 @@ async function addSchemaToEvanIpfs(schemaAsString: string): Promise<string> {
   const ipfsHash = Ipfs.bytes32ToIpfsHash(resultByte32);
   log.debug(`IpfsHash: ${ipfsHash}`);
   if (getConfig().evanRuntimeConfig?.enablePin) {
-    log.debug(`pin schema on public ipfs: ${schemaAsString}`);
-    const pinResult = pinSchemaInEvanIpfs(ipfsHash, runtime);
-    log.debug('Schema has been pinned: ' + pinResult);
+    log.debug(`Pin schema on public ipfs`);
+    pinSchemaInEvanIpfs(ipfsHash, runtime);
+    log.debug('Schema has been pinned');
   }
   return ipfsHash;
 }
@@ -35,13 +36,12 @@ async function getSchemaFromEvanIpfs(ipfsHash: string): Promise<string> {
   return schema;
 }
 
-async function pinSchemaInEvanIpfs(ipfsHash: string, runtime: Runtime): Promise<boolean> {
+async function pinSchemaInEvanIpfs(ipfsHash: string, runtime: Runtime): Promise<void> {
   try {
     await runtime.ipld.ipfs.remoteNode.pin.add(ipfsHash);
-    return true;
   } catch (error) {
     log.error(error);
-    return false;
+    throw new FailedToPin(error.message);
   }
 }
 
