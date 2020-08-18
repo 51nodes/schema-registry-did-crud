@@ -51,6 +51,11 @@ describe('Test flow with mocked Evan ipfs', () => {
     expect(schema).toBe(validJsonSchema);
   });
 
+  it('should get undefiend because of error', async () => {
+    jest.spyOn(evanIpfsService, 'getSchemaFromEvanIpfs').mockRejectedValue(new Error('error'));
+    expect(await getSchema(validDid)).toBeUndefined();
+  });
+
 });
 
 describe('Test flow with mocked Public Ipfs', () => {
@@ -66,6 +71,11 @@ describe('Test flow with mocked Public Ipfs', () => {
     jest.spyOn(publicIpfsService, 'getSchemaFromPublicIpfs').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDid)
     expect(schema).toBe(validJsonSchema);
+  });
+
+  it('should get undefiend because of error', async () => {
+    jest.spyOn(publicIpfsService, 'getSchemaFromPublicIpfs').mockRejectedValue(new Error('error'));
+    expect(await getSchema(validDid)).toBeUndefined();
   });
 
 });

@@ -4,6 +4,9 @@ import { validateSchemaType } from './schema-types/schema-validator';
 import evanIpfsService from './ipfs/evan-ipfs-service';
 import publicIpfsService from './ipfs/public-ipfs-service';
 import { InvalidInput } from './exceptions/invalid-input.exception';
+import { Logger } from 'tslog';
+
+const log: Logger = new Logger({ name: 'Schema Registry' });
 
 let configuration: ConfigObject = {};
 
@@ -38,15 +41,20 @@ export async function getSchema(didAsString: string): Promise<string> {
   if (!validateDid(didAsString)) {
     throw new InvalidInput('DID');
   }
-  let schemaAsString: string;
-  const did = parseSchemaDid(didAsString);
-  switch (did.network) {
-    case Network.EvanIpfs:
-      schemaAsString = await evanIpfsService.getSchemaFromEvanIpfs(did.id);
-      break;
-    case Network.PublicIpfs:
-      schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
-      break;
+  try {
+    let schemaAsString: string;
+    const did = parseSchemaDid(didAsString);
+    switch (did.network) {
+      case Network.EvanIpfs:
+        schemaAsString = await evanIpfsService.getSchemaFromEvanIpfs(did.id);
+        break;
+      case Network.PublicIpfs:
+        schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
+        break;
+    }
+    return schemaAsString;
+  } catch (error) {
+    log.error(error.message);
+    return;
   }
-  return schemaAsString;
 }
