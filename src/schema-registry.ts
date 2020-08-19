@@ -41,20 +41,15 @@ export async function getSchema(didAsString: string): Promise<string> {
   if (!validateDid(didAsString)) {
     throw new InvalidInput('DID');
   }
-  try {
-    let schemaAsString: string;
-    const did = parseSchemaDid(didAsString);
-    switch (did.network) {
-      case Network.EvanIpfs:
-        schemaAsString = await evanIpfsService.getSchemaFromEvanIpfs(did.id);
-        break;
-      case Network.PublicIpfs:
-        schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
-        break;
-    }
-    return schemaAsString;
-  } catch (error) {
-    log.error(error.message);
-    return;
+  let schemaAsString: string;
+  const did = parseSchemaDid(didAsString);
+  switch (did.network) {
+    case Network.EvanIpfs:
+      schemaAsString = await evanIpfsService.getSchemaFromEvanIpfs(did.id);
+      break;
+    case Network.PublicIpfs:
+      schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
+      break;
   }
+  return schemaAsString;
 }
