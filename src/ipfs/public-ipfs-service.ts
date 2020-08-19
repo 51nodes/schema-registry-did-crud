@@ -31,16 +31,21 @@ async function getSchemaFromPublicIpfs(ipfsHash: string): Promise<string> {
   let schemaAsString: string;
   const chunks = []
   log.debug(`Get schema from public ipfs with IpfsHash: ${ipfsHash}`);
-  for await (const file of ipfs.get(ipfsHash)) {
-    if (!file.content) continue;
-    const content = new BufferList()
-    for await (const chunk of file.content) {
-      content.append(chunk)
+  try {
+    for await (const file of ipfs.get(ipfsHash)) {
+      if (!file.content) continue;
+      const content = new BufferList()
+      for await (const chunk of file.content) {
+        content.append(chunk)
+      }
+      schemaAsString = content.toString();
     }
-    schemaAsString = content.toString();
+    log.debug(`Schema: ${schemaAsString}`);
+    return schemaAsString;
+  } catch (error) {
+    log.error(error.message);
+    return;
   }
-  log.debug(`Schema: ${schemaAsString}`);
-  return schemaAsString;
 }
 
 async function pinSchemaInPublicIpfs(ipfsHash: string, ipfs: any): Promise<void> {

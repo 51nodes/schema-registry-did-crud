@@ -30,10 +30,15 @@ async function addSchemaToEvanIpfs(schemaAsString: string): Promise<string> {
 async function getSchemaFromEvanIpfs(ipfsHash: string): Promise<string> {
   const runtime = await initEvanRunTime();
   log.debug(`Get schema from evan ipfs with IpfsHash: ${ipfsHash}`);
-  const fileBuffer = await runtime.dfs.get(ipfsHash);
-  const schema = fileBuffer.toString()
-  log.debug(`Schema: ${schema}`);
-  return schema;
+  try {
+    const fileBuffer = await runtime.dfs.get(ipfsHash);
+    const schema = fileBuffer.toString()
+    log.debug(`Schema: ${schema}`);
+    return schema;
+  } catch (error) {
+    log.error(error.message);
+    return;
+  }
 }
 
 async function pinSchemaInEvanIpfs(ipfsHash: string, runtime: Runtime): Promise<void> {
