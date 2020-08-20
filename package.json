@@ -1,6 +1,6 @@
 {
   "name": "@51nodes/decentralized-schema-registry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Library for DID based schema registry CRUD operations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
