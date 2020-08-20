@@ -22,7 +22,7 @@ export async function registerSchema(schemaContent: any, schemaType: SchemaType,
   if (!validateSchemaType(schemaContent, schemaType)) {
     throw new InvalidInput('Schema Type');
   }
-  let did = 'did:schema:' + network.toString() + ':' + 'type-hint=' + schemaType.toString() + ':';
+  let did = 'did:schema:' + network.toString() + ':' + schemaType.toString() + ':';
   let ipfsHash: string;
   switch (network) {
     case Network.EvanIpfs: {

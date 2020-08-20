@@ -72,12 +72,12 @@ export async function addSchemaToIpfs(schemaAsString: string) {
   const exampleDidPublic = await registerSchema(schemaAsString, SchemaType.JsonSchema, Network.PublicIpfs);
   log.info('Public IPFS DID: ' + exampleDidPublic);
 
-  log.info('get schema under did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
-  const exampleEvanSchema = await getSchema('did:schema:evan-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
+  log.info('get schema under did:schema:evan-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
+  const exampleEvanSchema = await getSchema('did:schema:evan-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
   log.info(exampleEvanSchema);
 
-  log.info('get schema under did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
-  const examplePublicSchema = await getSchema('did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
+  log.info('get schema under did:schema:public-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
+  const examplePublicSchema = await getSchema('did:schema:public-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n');
   log.info(examplePublicSchema);
 
   log.info('DONE!');
