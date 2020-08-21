@@ -21,16 +21,21 @@ import {initLibrary, registerSchema, getSchema, SchemaType, Network} from '@51no
 const configObject: ConfigObject = {
   publicIpfsConfig: {
     nodeUrl:'<ipfs node url>' // e.g. 'https://ipfs.infura.io:5001/api/v0',
-    enablePin: true // the given node should support pinning
+    enablePin: true // the given node should support pinning (otherweise an error will be shown)
   },
   evanRuntimeConfig: {
     accountMap: {
       '<evan account Id>':'<evan private key>'
-      // e.g. '0x8370F91b6Cdf7A15a7C48593c8Cba98C55B25e25':'50a635f2797d04e93c3c5d799099e42dbf116dcc04867ad6fbce83f1ec4cdfce'
+      /** WARNING: The provided evan account and private key are published on gitHub and only for example purposes,
+          therefore do not use this private key in your configuration and on any network.
+          Creating an evan account can be done using the evan.network dashboard
+          https://dashboard.evan.network/#/dashboard.vue.evan/onboarding.vue.evan/sign-up 
+          e.g. '0x8370F91b6Cdf7A15a7C48593c8Cba98C55B25e25':'50a635f2797d04e93c3c5d799099e42dbf116dcc04867ad6fbce83f1ec4cdfce'
+      */
     },
-    ipfs: { host: 'ipfs.evan.network', port: '443', protocol: 'https' }, // or another evan ipfs provider
-    web3Provider: 'wss://core.evan.network/ws', // or another evan web3 provider
-    enablePin: true // Require to have EVE balance, monthly payment
+    ipfs: { host: 'ipfs.evan.network', port: '443', protocol: 'https' }, // or another evan.network ipfs provider
+    web3Provider: 'wss://core.evan.network/ws', // or another evan.network web3 provider
+    enablePin: true // Require to have EVE balance, monthly payment (otherweise it will not be pinned, and no error will be shown)
   }
 }
 
@@ -63,6 +68,6 @@ async function registerSchema(schemaAsString: string, schemaType: SchemaType, ne
 //e.g. await registerSchema(validJsonSchema, SchemaType.JsonSchema, Network PublicIpfs);
 
 async function getSchema(did: string);
-//e.g. await getSchema('did:schema:public-ipfs:type-hint=json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
+//e.g. await getSchema('did:schema:public-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
 
 ```
