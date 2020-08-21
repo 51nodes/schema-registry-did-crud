@@ -4,9 +4,6 @@ import { validateSchemaType } from './schema-types/schema-validator';
 import evanIpfsService from './ipfs/evan-ipfs-service';
 import publicIpfsService from './ipfs/public-ipfs-service';
 import { InvalidInput } from './exceptions/invalid-input.exception';
-import { Logger } from 'tslog';
-
-const log: Logger = new Logger({ name: 'Schema Registry' });
 
 let configuration: ConfigObject = {};
 
