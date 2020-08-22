@@ -70,4 +70,9 @@ async function registerSchema(schemaAsString: string, schemaType: SchemaType, ne
 async function getSchema(did: string);
 //e.g. await getSchema('did:schema:public-ipfs:json-schema:QmY8GAAJoffVZBH1JYvta2LRZxsPaUYVQ1FGTaxwK3vV7n')
 
+// utils function
+function validateSchemaDid(did: string): boolean;
+function parseSchemaDid(did: string): SchemaDid;
+function stringifySchemaDid(schemaDidObject: SchemaDid): string;
+
 ```
