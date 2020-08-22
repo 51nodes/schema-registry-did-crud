@@ -72,8 +72,8 @@ test('parse and stringify did with type hint', () => {
     did: 'did',
     method: 'schema',
     network: Network.EvanIpfs,
-    hint: SchemaType.JsonSchema,
-    id: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
+    typeHint: SchemaType.JsonSchema,
+    hash: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
   }
   const validDid = `did:schema:evan-ipfs:json-schema:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
   const resultObject = parseSchemaDid(validDid);
@@ -87,7 +87,7 @@ test('parse and stringify did without type hint', () => {
     did: 'did',
     method: 'schema',
     network: Network.EvanIpfs,
-    id: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
+    hash: '0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c'
   }
   const validDid = `did:schema:evan-ipfs:0xa937ea507c396d8d417be352825c65f5fdf1e6fb60e8368db03f2cccda05567c`;
   const resultObject = parseSchemaDid(validDid);

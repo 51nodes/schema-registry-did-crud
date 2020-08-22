@@ -137,13 +137,13 @@ describe('Test all possible variation of getSchema ', () => {
   const validDidWithXsdHint = 'did:schema:public-ipfs:xsd:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
   const validDidWithoutHint = 'did:schema:public-ipfs:QmNLei78zWmzUdbeRB3CiUfAizWUrbeeZh5K1rhAQKCh51';
 
-  it('should get the registierd json schema', async () => {
+  it('should get the registered json schema', async () => {
     jest.spyOn(publicIpfsService, 'getSchemaFromPublicIpfs').mockReturnValue(Promise.resolve(validJsonSchema));
     const schema = await getSchema(validDidWithJsonSchemaHint)
     expect(schema).toBe(validJsonSchema);
   });
 
-  it('should get the registierd xsd schema', async () => {
+  it('should get the registered xsd schema', async () => {
     jest.spyOn(publicIpfsService, 'getSchemaFromPublicIpfs').mockReturnValue(Promise.resolve(validXsd));
     const schema = await getSchema(validDidWithXsdHint)
     expect(schema).toBe(validXsd);
