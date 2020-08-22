@@ -3,12 +3,12 @@ import { InvalidInput } from '../exceptions/invalid-input.exception';
 
 const didRegEx = /^did:schema:(evan-ipfs|public-ipfs):((json-schema|xsd):)?([0-9a-zA-Z._-]+)$/
 
-export function validateDid(did: string): boolean {
+export function validateSchemaDid(did: string): boolean {
     return didRegEx.test(did);
 }
 
 export function parseSchemaDid(didAsString: string): SchemaDid {
-    if (!validateDid(didAsString)) {
+    if (!validateSchemaDid(didAsString)) {
         throw new InvalidInput('DID');
     }
     const parsedDidArray = didAsString.match(didRegEx);

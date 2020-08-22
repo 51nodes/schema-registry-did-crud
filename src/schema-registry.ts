@@ -1,5 +1,5 @@
 import { SchemaType, Network, ConfigObject } from './model';
-import { validateDid, parseSchemaDid } from './did/did-utils';
+import { validateSchemaDid, parseSchemaDid } from './did/did-utils';
 import { validateSchemaType } from './schema-types/schema-validator';
 import evanIpfsService from './ipfs/evan-ipfs-service';
 import publicIpfsService from './ipfs/public-ipfs-service';
@@ -35,7 +35,7 @@ export async function registerSchema(schemaContent: any, schemaType: SchemaType,
 }
 
 export async function getSchema(didAsString: string): Promise<string> {
-  if (!validateDid(didAsString)) {
+  if (!validateSchemaDid(didAsString)) {
     throw new InvalidInput('DID');
   }
   let schemaAsString: string;
@@ -48,5 +48,10 @@ export async function getSchema(didAsString: string): Promise<string> {
       schemaAsString = await publicIpfsService.getSchemaFromPublicIpfs(did.id);
       break;
   }
-  return schemaAsString;
+  if (!did.hint) {
+    return schemaAsString;
+  } else if (schemaAsString && validateSchemaType(schemaAsString, did.hint)) {
+    return schemaAsString;
+  }
+  return;
 }
