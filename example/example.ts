@@ -28,7 +28,7 @@ const validJsonSchema = `{
       "type": "number",
       "exclusiveMinimum": 0
     }
-  }
+  },
   "required": [ "productId", "productName", "price" ]
 }`;
 
